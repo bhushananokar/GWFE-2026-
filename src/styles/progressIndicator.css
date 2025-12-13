@@ -1,0 +1,203 @@
+/* Progress Indicator Styles */
+.progress-indicator {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-dot-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.progress-dot {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dot-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+  z-index: 2;
+}
+
+.dot-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1;
+}
+
+/* Active state */
+.progress-dot-wrapper.active .dot-inner {
+  background: var(--yellow);
+  transform: scale(1.4);
+  box-shadow: 0 0 20px rgba(251, 188, 4, 0.6);
+}
+
+.progress-dot-wrapper.active .dot-ring {
+  border-color: rgba(251, 188, 4, 0.4);
+  transform: translate(-50%, -50%) scale(1.8);
+}
+
+/* Hover state */
+.progress-dot-wrapper:hover .dot-inner {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.progress-dot-wrapper:hover .dot-ring {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+.progress-dot-wrapper.active:hover .dot-inner {
+  transform: scale(1.5);
+}
+
+/* Labels */
+.progress-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.progress-dot-wrapper:hover .progress-label,
+.progress-dot-wrapper.active .progress-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.progress-dot-wrapper.active .progress-label {
+  color: var(--yellow);
+}
+
+/* Progress Line */
+.progress-line {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+  border-radius: 2px;
+}
+
+.progress-line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, var(--blue), var(--yellow), var(--red));
+  transition: height 0.3s ease;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(251, 188, 4, 0.3);
+}
+
+/* Pulse Animation */
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1.4);
+    box-shadow: 0 0 20px rgba(251, 188, 4, 0.6);
+  }
+  50% {
+    transform: scale(1.5);
+    box-shadow: 0 0 30px rgba(251, 188, 4, 0.8);
+  }
+}
+
+.progress-dot-wrapper.active .dot-inner {
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .progress-indicator {
+    right: 1rem;
+  }
+
+  .progress-dots {
+    gap: 1.5rem;
+  }
+
+  .progress-label {
+    display: none;
+  }
+
+  .dot-inner {
+    width: 10px;
+    height: 10px;
+  }
+
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .progress-dot-wrapper.active .dot-inner {
+    transform: scale(1.6);
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-indicator {
+    right: 0.5rem;
+  }
+
+  .progress-dots {
+    gap: 1.2rem;
+  }
+
+  .dot-inner {
+    width: 8px;
+    height: 8px;
+  }
+
+  .progress-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Hide on very small screens */
+@media (max-width: 320px) {
+  .progress-indicator {
+    display: none;
+  }
+}
