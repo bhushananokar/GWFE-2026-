@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import anime from 'animejs';
+import anime from 'animejs/lib/anime.es.js';
 import OuterRing from './OuterRing';
 import InnerRings from './InnerRings';
 import TickMarks from './TickMarks';
@@ -8,91 +8,63 @@ import '../../styles/visualization.css';
 
 const CentralViz = ({ scrollProgress, currentSection }) => {
   const vizRef = useRef(null);
-  const dotsRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (!vizRef.current) return;
+    if (!vizRef.current || !containerRef.current) return;
 
-    // Section-based transformations
+    // Position transitions based on section
+    let position = { x: '50%', y: '50%' }; // Default center
+
     switch (currentSection) {
-      case 0: // Hero - Circular with rotation
-        anime({
-          targets: vizRef.current,
-          rotateX: 0,
-          rotateY: scrollProgress * 360,
-          rotateZ: 0,
-          scale: 1,
-          duration: 100,
-          easing: 'linear'
-        });
+      case 0: // Hero - Right
+        position = { x: '70%', y: '50%' };
         break;
-
-      case 1: // Stats - Expand and tilt
-        anime({
-          targets: vizRef.current,
-          rotateX: scrollProgress * 45,
-          rotateY: 360 + scrollProgress * 180,
-          rotateZ: 0,
-          scale: 1 + scrollProgress * 0.3,
-          duration: 100,
-          easing: 'linear'
-        });
+      case 1: // Stats - Center
+        position = { x: '50%', y: '50%' };
         break;
-
-      case 2: // Learn - Disassemble
-        anime({
-          targets: vizRef.current,
-          rotateX: 45 + scrollProgress * 45,
-          rotateY: 540 + scrollProgress * 180,
-          rotateZ: scrollProgress * 180,
-          scale: 1.3,
-          duration: 100,
-          easing: 'linear'
-        });
+      case 2: // Learn - Left
+        position = { x: '30%', y: '50%' };
         break;
-
-      case 3: // Hack - Form sphere
-        anime({
-          targets: vizRef.current,
-          rotateX: 90 + scrollProgress * 90,
-          rotateY: 720 + scrollProgress * 360,
-          rotateZ: 180,
-          scale: 1.2,
-          duration: 100,
-          easing: 'linear'
-        });
+      case 3: // Hack - Left
+        position = { x: '30%', y: '50%' };
         break;
-
-      case 4: // Join - Spiral collapse
-        anime({
-          targets: vizRef.current,
-          rotateX: 180,
-          rotateY: 1080 + scrollProgress * 720,
-          rotateZ: 180 + scrollProgress * 360,
-          scale: 1 - scrollProgress * 0.5,
-          duration: 100,
-          easing: 'linear'
-        });
+      case 4: // Join - Left
+        position = { x: '30%', y: '50%' };
         break;
-
       default:
-        break;
+        position = { x: '50%', y: '50%' };
     }
+
+    // Animate container position
+    anime({
+      targets: containerRef.current,
+      left: position.x,
+      top: position.y,
+      duration: 1000,
+      easing: 'easeInOutQuad'
+    });
+
+    // Base state rotation - only subtle rotation based on scroll within section
+    anime({
+      targets: vizRef.current,
+      rotateX: 0,
+      rotateY: scrollProgress * 90, // Gentle rotation
+      rotateZ: 0,
+      scale: 1,
+      duration: 600,
+      easing: 'easeOutQuad'
+    });
+
   }, [scrollProgress, currentSection]);
 
   return (
-    <div className="visualization-container">
+    <div className="visualization-container" ref={containerRef}>
       <div className="viz-inner" ref={vizRef}>
-        {/* Outer colored ring segments */}
         <OuterRing scrollProgress={scrollProgress} currentSection={currentSection} />
-
-        {/* Tick marks around perimeter */}
         <TickMarks />
-
-        {/* Inner decorative rings */}
         <InnerRings scrollProgress={scrollProgress} currentSection={currentSection} />
-
-        {/* Curved decorative arcs */}
+        
         <div className="curved-arcs">
           <div 
             className="curved-arc arc-1" 
@@ -112,12 +84,7 @@ const CentralViz = ({ scrollProgress, currentSection }) => {
           />
         </div>
 
-        {/* Center dots grid - 3D transforming element */}
-        <DotsGrid 
-          ref={dotsRef}
-          scrollProgress={scrollProgress} 
-          currentSection={currentSection} 
-        />
+        <DotsGrid scrollProgress={scrollProgress} currentSection={currentSection} />
       </div>
     </div>
   );

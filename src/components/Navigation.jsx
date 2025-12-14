@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import anime from 'animejs';
 import '../styles/navigation.css';
 
 const Navigation = ({ currentSection }) => {
@@ -15,11 +14,20 @@ const Navigation = ({ currentSection }) => {
   ];
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrolled = window.scrollY > 50;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(scrolled);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -27,11 +35,9 @@ const Navigation = ({ currentSection }) => {
     e.preventDefault();
     const targetY = sectionIndex * window.innerHeight;
     
-    anime({
-      targets: document.documentElement,
-      scrollTop: targetY,
-      duration: 1000,
-      easing: 'easeInOutQuad'
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth'
     });
 
     setIsMobileMenuOpen(false);

@@ -42,7 +42,7 @@
 }
 
 .segment-blue {
-  border-top-color: var(--blue);
+  border-top-color: var(--blue-500);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
@@ -51,7 +51,7 @@
 
 .segment-green {
   border-top-color: transparent;
-  border-right-color: var(--green);
+  border-right-color: var(--green-500);
   border-bottom-color: transparent;
   border-left-color: transparent;
   clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
@@ -60,7 +60,7 @@
 .segment-yellow {
   border-top-color: transparent;
   border-right-color: transparent;
-  border-bottom-color: var(--yellow);
+  border-bottom-color: var(--yellow-500);
   border-left-color: transparent;
   clip-path: polygon(50% 50%, 50% 100%, 0% 100%, 0% 50%);
 }
@@ -69,7 +69,7 @@
   border-top-color: transparent;
   border-right-color: transparent;
   border-bottom-color: transparent;
-  border-left-color: var(--red);
+  border-left-color: var(--red-500);
   clip-path: polygon(50% 50%, 0% 50%, 0% 0%, 50% 0%);
 }
 
@@ -100,7 +100,6 @@
   background: rgba(255, 255, 255, 0.6);
 }
 
-/* Inner Rings */
 /* Inner Rings */
 .inner-ring {
   position: absolute;

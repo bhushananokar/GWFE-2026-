@@ -56,9 +56,8 @@
   z-index: 1;
 }
 
-/* Active state */
 .progress-dot-wrapper.active .dot-inner {
-  background: var(--yellow);
+  background: var(--yellow-500);
   transform: scale(1.4);
   box-shadow: 0 0 20px rgba(251, 188, 4, 0.6);
 }
@@ -68,7 +67,6 @@
   transform: translate(-50%, -50%) scale(1.8);
 }
 
-/* Hover state */
 .progress-dot-wrapper:hover .dot-inner {
   background: rgba(255, 255, 255, 0.6);
   transform: scale(1.2);
@@ -83,7 +81,6 @@
   transform: scale(1.5);
 }
 
-/* Labels */
 .progress-label {
   font-size: 0.85rem;
   font-weight: 600;
@@ -104,10 +101,9 @@
 }
 
 .progress-dot-wrapper.active .progress-label {
-  color: var(--yellow);
+  color: var(--yellow-500);
 }
 
-/* Progress Line */
 .progress-line {
   position: absolute;
   right: 5px;
@@ -124,13 +120,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(180deg, var(--blue), var(--yellow), var(--red));
+  background: linear-gradient(180deg, var(--blue-500), var(--yellow-500), var(--red-500));
   transition: height 0.3s ease;
   border-radius: 2px;
   box-shadow: 0 0 10px rgba(251, 188, 4, 0.3);
 }
 
-/* Pulse Animation */
 @keyframes dotPulse {
   0%, 100% {
     transform: scale(1.4);
@@ -146,7 +141,6 @@
   animation: dotPulse 2s ease-in-out infinite;
 }
 
-/* Responsive */
 @media (max-width: 968px) {
   .progress-indicator {
     right: 1rem;
@@ -192,12 +186,5 @@
   .progress-dot {
     width: 8px;
     height: 8px;
-  }
-}
-
-/* Hide on very small screens */
-@media (max-width: 320px) {
-  .progress-indicator {
-    display: none;
   }
 }

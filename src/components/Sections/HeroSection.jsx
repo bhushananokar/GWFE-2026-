@@ -1,53 +1,72 @@
-import React from 'react';
-import '../../styles/sections.css';
+import React, { useEffect, useRef } from 'react';
+import anime from 'animejs/lib/anime.es.js';
 
 const HeroSection = () => {
+  const heroContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Hide everything initially
+    if (heroContainerRef.current) {
+      heroContainerRef.current.style.opacity = '0';
+    }
+
+    // After loading completes, fade in the entire hero section
+    setTimeout(() => {
+      anime({
+        targets: heroContainerRef.current,
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 1200,
+        easing: 'easeOutQuad'
+      });
+    }, 5500); // After loading animation completes
+  }, []);
+
   return (
-    <section className="section hero-section" id="section-1">
-      <div className="section-content">
-        <div className="hero-badge">
-          <span className="google-text">GOOGLE</span>
-          <span className="developer-text">DEVELOPER GROUPS</span>
-          <span className="present-text">PRESENT</span>
-        </div>
-        
-        <h1 className="hero-title">
-          <span className="title-word">
-            <span className="title-char">W</span>
-            <span className="title-char">O</span>
-            <span className="title-char">W</span>
-          </span>
-        </h1>
-
-        <div className="hero-year">
-          <span className="year-digit">2</span>
-          <span className="year-digit">0</span>
-          <span className="year-digit">2</span>
-          <span className="year-digit">5</span>
+    <section className="hero-section" id="section-1">
+      <div className="hero-container" ref={heroContainerRef}>
+        {/* WOW Logo */}
+        <div className="hero-wow-logo">
+          <h1 className="hero-wow-text">
+            <span className="wow-letter w-1">W</span>
+            <span className="wow-letter o">O</span>
+            <span className="wow-letter w-2">W</span>
+          </h1>
+          <div className="hero-year">2025</div>
         </div>
 
-        <p className="hero-subtitle">
-          Wonder of Wonders - India's Largest Developer Community Festival
-        </p>
+        {/* Content */}
+        <div className="hero-content">
+          {/* Badge */}
+          <div className="hero-badge">
+            <span className="badge-text-blue">GOOGLE</span>
+            <span className="badge-text-green">DEVELOPER GROUPS</span>
+            <span className="badge-text-white">PRESENT</span>
+          </div>
 
-        <p className="hero-description">
-          Join <strong>5000+ developers</strong> for 3 days of workshops, tech talks, 
-          hackathons, and networking with industry leaders and Google Developer Experts.
-        </p>
+          {/* Subtitle */}
+          <div className="hero-subtitle">
+            <h2 className="subtitle-main">Wonder of Wonders</h2>
+            <p className="subtitle-tagline">India's Largest Developer Community Festival</p>
+          </div>
 
-        <div className="hero-cta">
-          <button className="cta-btn cta-primary">
-            Register Free
-          </button>
-          <button className="cta-btn cta-secondary">
-            View Schedule
-          </button>
+          {/* CTA Buttons */}
+          <div className="hero-cta">
+            <button className="cta-primary">
+              <span>Register Free</span>
+              <span className="cta-arrow">→</span>
+            </button>
+            <button className="cta-secondary">
+              <span>View Schedule</span>
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div className="scroll-indicator">
-          <span className="scroll-text">Scroll to explore</span>
-          <div className="scroll-line"></div>
-        </div>
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator">
+        <div className="scroll-text">Scroll to Explore</div>
+        <div className="scroll-line"></div>
       </div>
     </section>
   );
